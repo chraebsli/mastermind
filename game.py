@@ -3,14 +3,13 @@ import sys
 
 class Game:
     class Colourvalues:
-        red          = "\033[31m"
-        magenta      = "\033[35m"
-        green        = "\033[32m"
-        yellow       = "\033[33m"
-        white        = "\033[97m"    
-        black        = "\033[30m"
-        normal       = '\033[0m'
-
+        red = "\033[31m"
+        magenta = "\033[35m"
+        green = "\033[32m"
+        yellow = "\033[33m"
+        white = "\033[97m"    
+        black = "\033[30m"
+        normal = '\033[0m'
 
     def __init__(self, maxPasses, numberOfColours):
         'Start new game\nmaxpasses: int\nnumberOfColours: int'
@@ -21,22 +20,19 @@ class Game:
         self.black = 0
         self.white = 0
 
-
     def getRandom(self):
         'get random colour values'
         l = [e[0] for e in self.colours]
         return random.choices(k=self.numOfColours, population=l)
 
-
     def startGame(self):
         'start the game'
         start = input('Are you ready?\ny/n: ').lower()
-        
+
         if start in ('y', 'yes'):
             Game.loopGame(self)
         else:
             sys.exit() 
-
 
     def loopGame(self):
         computerGuess = self.computerGuess
@@ -55,7 +51,7 @@ class Game:
                         print('try')
                     case 2:
                         print('tries')
-                                        
+
                 Game.printColored(self, computerGuess, pre='Solution: ')
 
                 again = input('\nDo you want to play again?\ny/n: ').lower()
@@ -68,47 +64,44 @@ class Game:
             
             PASS += 1
 
-
     def getMatching(self, userGuess):
         self.white = 0
         self.black = 0
         for element in range(4):
             curUser = userGuess[element]
             curComputer = self.computerGuess[element]
-            
+
             # get matching positions
             if curUser == curComputer:
                 self.black += 1
-            
+
             # get matching colours
             elif curUser in self.computerGuess:
                 self.white += 1
             element += 1
 
-
     def getInput(self, PASS):
         'gets a validated input'
         colours = self.colours
-        
+
         while self.maxPasses >= PASS or self.maxPasses == 0:
             if self.maxPasses == 0:
                 print(f'Write your {PASS}./∞ guess')
             else:
                 print(f'Write your {PASS}./{self.maxPasses} guess')
             userInput = input().lower()
-        
+
             if userInput in ('q', 'quit', 'e', 'exit'):
                 sys.exit()
             if userInput in ('r', 'restart'):
                 Game.startGame(self)
-            
+
             userInput = Game.splitInput(self, userInput)
             breaker = Game.validateInput1(self, userInput)
             if breaker:
                 break
 
         return Game.validateInput(self, userInput)
-
 
     def validateInput1(self, userInput):
         if len(userInput) == 4:
@@ -118,7 +111,6 @@ class Game:
             print(f'\nYou entered too much values. You can only input 4 values but you entered {UILen}.')
         if UILen < 4:
             print(f'\nYou entered too few values. You have to input 4 values but you entered only {UILen}.')
-        
 
     def splitInput(self, userInput):
         if len(userInput) == 4:
@@ -126,7 +118,6 @@ class Game:
         else:
             userInput = userInput.split(' ')
         return userInput
-        
 
     def checkColours(self, userInput):
         colours = self.colours
@@ -145,7 +136,6 @@ class Game:
             c += 1
         if o == [True, True, True, True]:
             return True
-
 
     def validateInput(self, userInput):
         'validate input\n\n--> input in colour names'
@@ -166,7 +156,6 @@ class Game:
 
         Game.printColored(self, userGuess, '\nYour guess:\n')
         return userGuess
-
 
     def printColored(self, userGuess, pre):
         'print colored user guess'
@@ -198,7 +187,7 @@ def gameInitializer():
             break
         except:
             print("Somethin is wrong with your input. Please try again.")
-    
+
     while True:
         numberOfColours = input('With how many colours to guess you want to play?\n')
         try:
@@ -206,7 +195,7 @@ def gameInitializer():
             break
         except:
             print("Somethin is wrong with your input. Please try again.")
-    
+
     game = Game(maxPasses, numberOfColours)
     game.startGame()
 
