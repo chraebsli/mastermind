@@ -97,8 +97,7 @@ class Game:
                 Game.startGame(self)
 
             userInput = Game.splitInput(self, userInput)
-            breaker = Game.validateInput1(self, userInput)
-            if breaker:
+            if breaker := Game.validateInput1(self, userInput):
                 break
 
         return Game.validateInput(self, userInput)
