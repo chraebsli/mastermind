@@ -1,13 +1,14 @@
 import random
 import sys
 
+
 class Game:
     class Colourvalues:
         red = "\033[31m"
         magenta = "\033[35m"
         green = "\033[32m"
         yellow = "\033[33m"
-        white = "\033[97m"    
+        white = "\033[97m"
         black = "\033[30m"
         normal = '\033[0m'
 
@@ -15,7 +16,8 @@ class Game:
         'Start new game\nmaxpasses: int\nnumberOfColours: int'
         self.maxPasses = maxPasses
         self.numOfColours = numberOfColours
-        self.colours = [['red', 'r', '1'], ['magenta', 'm', '2'], ['green', 'g', '3'], ['yellow', 'y', '4'],['white', 'w', '5'], ['black', 'b', '6']]
+        self.colours = [['red', 'r', '1'], ['magenta', 'm', '2'], ['green', 'g', '3'], [
+            'yellow', 'y', '4'], ['white', 'w', '5'], ['black', 'b', '6']]
         self.computerGuess = Game.getRandom(self)
         self.black = 0
         self.white = 0
@@ -32,7 +34,7 @@ class Game:
         if start in ('y', 'yes'):
             Game.loopGame(self)
         else:
-            sys.exit() 
+            sys.exit()
 
     def loopGame(self):
         computerGuess = self.computerGuess
@@ -45,7 +47,8 @@ class Game:
             Game.getMatching(self, userGuess)
 
             if self.black == 4:
-                print(f'\nYou won!\nYou got the same guesses like the computer in {PASS} ', end='')
+                print(
+                    f'\nYou won!\nYou got the same guesses like the computer in {PASS} ', end='')
                 match PASS:
                     case 1:
                         print('try')
@@ -60,8 +63,9 @@ class Game:
                 else:
                     sys.exit()
             else:
-                print(f'\nYou have {self.black} positions right.\nYou have {self.white}x the right colour but on the wrong position\n')
-            
+                print(
+                    f'\nYou have {self.black} positions right.\nYou have {self.white}x the right colour but on the wrong position\n')
+
             PASS += 1
 
     def getMatching(self, userGuess):
@@ -108,13 +112,16 @@ class Game:
             return Game.checkColours(self, userInput)
         UILen = len(userInput)
         if UILen > 4:
-            print(f'\nYou entered too much values. You can only input 4 values but you entered {UILen}.')
+            print(
+                f'\nYou entered too much values. You can only input 4 values but you entered {UILen}.')
         if UILen < 4:
-            print(f'\nYou entered too few values. You have to input 4 values but you entered only {UILen}.')
+            print(
+                f'\nYou entered too few values. You have to input 4 values but you entered only {UILen}.')
 
     def splitInput(self, userInput):
         if len(userInput) == 4:
-            userInput = [userInput[0], userInput[1], userInput[2], userInput[3]]
+            userInput = [userInput[0], userInput[1],
+                         userInput[2], userInput[3]]
         else:
             userInput = userInput.split(' ')
         return userInput
@@ -131,7 +138,8 @@ class Game:
                 if element in pair:
                     o[c] = True
             if f == 6:
-                print(f'\nYou entered a wrong value ("{element}"). Please try again.')
+                print(
+                    f'\nYou entered a wrong value ("{element}"). Please try again.')
                 break
             c += 1
         if o == [True, True, True, True]:
@@ -181,7 +189,8 @@ class Game:
 
 def gameInitializer():
     while True:
-        maxPasses = input('In how much passes you want to win this game? (0 for ∞ tries):\n')
+        maxPasses = input(
+            'In how much passes you want to win this game? (0 for ∞ tries):\n')
         try:
             maxPasses = int(maxPasses)
             break
@@ -189,7 +198,8 @@ def gameInitializer():
             print("Somethin is wrong with your input. Please try again.")
 
     while True:
-        numberOfColours = input('With how many colours to guess you want to play?\n')
+        numberOfColours = input(
+            'With how many colours to guess you want to play?\n')
         try:
             numberOfColours = int(numberOfColours)
             break
@@ -198,5 +208,6 @@ def gameInitializer():
 
     game = Game(maxPasses, numberOfColours)
     game.startGame()
+
 
 gameInitializer()
